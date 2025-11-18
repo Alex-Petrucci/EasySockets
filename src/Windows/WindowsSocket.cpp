@@ -14,6 +14,10 @@ namespace es
 
     }
 
+    WindowsSocket::~WindowsSocket()
+    {
+        closesocket(m_socket);
+    }
 
     WindowsSocket::WindowsSocket(IpVersion ip_version, Protocol protocol)
         : WindowsSocket{}

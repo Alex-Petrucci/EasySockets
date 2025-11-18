@@ -10,6 +10,25 @@ namespace es
     {
     public:
         WindowsSocket(IpVersion ip_version, Protocol protocol);
+        ~WindowsSocket();
+        WindowsSocket(const WindowsSocket&) = delete;
+        WindowsSocket& operator=(const WindowsSocket&) = delete;
+        WindowsSocket(WindowsSocket&& other) noexcept
+            : m_socket(other.m_socket)
+            , m_winsock_data(other.m_winsock_data)
+        {
+            other.m_socket = INVALID_SOCKET;
+            other.m_winsock_data = {};
+        }
+        WindowsSocket& operator=(WindowsSocket&& other) noexcept
+        {
+            m_socket = other.m_socket;
+            m_winsock_data = other.m_winsock_data;
+            other.m_socket = INVALID_SOCKET;
+            other.m_winsock_data = {};
+
+            return *this;
+        }
 
         void bind_to(Address address, Port port);
         void connect_to(Address address, Port port);
