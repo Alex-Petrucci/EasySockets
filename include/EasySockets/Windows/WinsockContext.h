@@ -11,17 +11,9 @@ namespace es
         WinsockContext();
         WinsockContext(const WinsockContext&) = delete;
         WinsockContext& operator=(const WinsockContext&) = delete;
-        WinsockContext(WinsockContext&& other) noexcept
-            : m_wsa_data{other.m_wsa_data}
-        {
-            other.m_wsa_data = {};
-        }
-        WinsockContext& operator=(WinsockContext&& other) noexcept
-        {
-            m_wsa_data = other.m_wsa_data;
-            other.m_wsa_data = {};
-            return *this;
-        }
+        WinsockContext(WinsockContext&& other) noexcept;
+        WinsockContext& operator=(WinsockContext&& other) noexcept;
+
         ~WinsockContext();
 
     private:
