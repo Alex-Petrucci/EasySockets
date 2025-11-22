@@ -1,9 +1,16 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 namespace es
 {
-    using Address = const char*;
+    using Address = std::string;
     using Port = uint16_t;
+
+    struct EndPoint
+    {
+        Address address;
+        Port port;
+    };
 }

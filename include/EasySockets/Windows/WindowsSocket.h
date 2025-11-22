@@ -1,6 +1,7 @@
 #pragma once
 
 #include <winsock2.h>
+#include <ws2tcpip.h>
 #include <EasySockets/Api/SocketTypes.h>
 #include <EasySockets/Api/Addresses.h>
 
@@ -13,29 +14,17 @@ namespace es
         ~WindowsSocket();
         WindowsSocket(const WindowsSocket&) = delete;
         WindowsSocket& operator=(const WindowsSocket&) = delete;
-        WindowsSocket(WindowsSocket&& other) noexcept
-            : m_socket(other.m_socket)
-            , m_winsock_data(other.m_winsock_data)
-        {
-            other.m_socket = INVALID_SOCKET;
-            other.m_winsock_data = {};
-        }
-        WindowsSocket& operator=(WindowsSocket&& other) noexcept
-        {
-            m_socket = other.m_socket;
-            m_winsock_data = other.m_winsock_data;
-            other.m_socket = INVALID_SOCKET;
-            other.m_winsock_data = {};
+        WindowsSocket(WindowsSocket&& other) noexcept;
+        WindowsSocket& operator=(WindowsSocket&& other) noexcept;
 
-            return *this;
-        }
-
-        void bind_to(Address address, Port port);
-        void connect_to(Address address, Port port);
+        void bind_to(const EndPoint& end_point);
+        void connect_to(const EndPoint& end_point);
         void listen_for_connections(int backlog);
         WindowsSocket accept_connection();
         int receive_data(char* buffer, int buffer_size);
+        int receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point);
         int send_data(const char* buffer, int buffer_size);
+        int send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
     private:
         struct WinsockData
@@ -46,6 +35,9 @@ namespace es
         };
 
         WindowsSocket();
+
+        // must free with freeaddrinfo
+        addrinfo* resolve_address(const EndPoint& end_point, int flags);
 
         SOCKET m_socket;
         WinsockData m_winsock_data;

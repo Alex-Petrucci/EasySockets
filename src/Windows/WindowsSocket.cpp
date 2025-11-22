@@ -16,7 +16,8 @@ namespace es
 
     WindowsSocket::~WindowsSocket()
     {
-        closesocket(m_socket);
+        if (m_socket != INVALID_SOCKET)
+            closesocket(m_socket);
     }
 
     WindowsSocket::WindowsSocket(IpVersion ip_version, Protocol protocol)
@@ -28,6 +29,9 @@ namespace es
             m_winsock_data.af = AF_INET;
             break;
         case IpVersion::ipv6:
+            m_winsock_data.af = AF_INET6;
+            break;
+        case IpVersion::unspecified:
             m_winsock_data.af = AF_INET6;
             break;
         }
@@ -49,42 +53,57 @@ namespace es
         {
             throw std::runtime_error("socket() failed: " + std::to_string(WSAGetLastError()));
         }
-    }
 
-    void WindowsSocket::bind_to(Address address, Port port)
-    {
-        sockaddr_in service;
-        service.sin_family = m_winsock_data.af;
-        service.sin_addr.s_addr = inet_addr(address);
-        service.sin_port = htons(port);
-
-        SOCKADDR* addr = reinterpret_cast<SOCKADDR*>(&service);
-
-        if (bind(m_socket, addr, sizeof(service)) == SOCKET_ERROR)
+        if (ip_version == IpVersion::unspecified)
         {
-            throw std::runtime_error("bind() failed: " + std::to_string(WSAGetLastError()));
+            const int no = 0; // has to be an int, despite winsock taking a char*
+            if (setsockopt(m_socket, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<const char *>(&no), sizeof(no)) == SOCKET_ERROR)
+                throw std::runtime_error("setsockopt() failed: " + std::to_string(WSAGetLastError()));
         }
     }
 
-    void WindowsSocket::connect_to(Address address, Port port)
+    WindowsSocket::WindowsSocket(WindowsSocket&& other) noexcept
+        : m_socket(other.m_socket)
+        , m_winsock_data(other.m_winsock_data)
     {
-        addrinfo hints{};
-        hints.ai_family = m_winsock_data.af;
-        hints.ai_socktype = m_winsock_data.type;
-        hints.ai_protocol = m_winsock_data.protocol;
+        other.m_socket = INVALID_SOCKET;
+        other.m_winsock_data = {};
+    }
 
-        addrinfo *result{nullptr};
+    WindowsSocket& WindowsSocket::operator=(WindowsSocket&& other) noexcept
+    {
+        m_socket = other.m_socket;
+        m_winsock_data = other.m_winsock_data;
+        other.m_socket = INVALID_SOCKET;
+        other.m_winsock_data = {};
 
-        int res = getaddrinfo(address, std::to_string(port).c_str(), &hints, &result);
-        if (res != 0)
-            throw std::runtime_error("getaddrinfo() failed: " + std::to_string(res));
+        return *this;
+    }
 
-        if (connect(m_socket, result->ai_addr, static_cast<int>(result->ai_addrlen)) == SOCKET_ERROR)
+    void WindowsSocket::bind_to(const EndPoint& end_point)
+    {
+        addrinfo* addr_info{resolve_address(end_point, AI_PASSIVE)};
+
+        if (bind(m_socket, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen)) == SOCKET_ERROR)
         {
+            freeaddrinfo(addr_info);
+            throw std::runtime_error("bind() failed: " + std::to_string(WSAGetLastError()));
+        }
+
+        freeaddrinfo(addr_info);
+    }
+
+    void WindowsSocket::connect_to(const EndPoint& end_point)
+    {
+        addrinfo* addr_info{resolve_address(end_point, 0)};
+
+        if (connect(m_socket, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen)) == SOCKET_ERROR)
+        {
+            freeaddrinfo(addr_info);
             throw std::runtime_error("connect() failed: " + std::to_string(WSAGetLastError()));
         }
 
-        freeaddrinfo(result);
+        freeaddrinfo(addr_info);
     }
 
     void WindowsSocket::listen_for_connections(int backlog)
@@ -113,8 +132,40 @@ namespace es
     {
         int bytes = recv(m_socket, buffer, buffer_size, 0);
 
-        if (bytes < 0)
+        if (bytes == SOCKET_ERROR)
             throw std::runtime_error("recv() failed: " + std::to_string(WSAGetLastError()));
+
+        return bytes;
+    }
+
+    int WindowsSocket::receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point)
+    {
+        sockaddr_storage sender{};
+        int sender_length = sizeof(sender);
+
+        int bytes = recvfrom(m_socket, buffer, buffer_size, 0, reinterpret_cast<sockaddr*>(&sender), &sender_length);
+
+        if (bytes == SOCKET_ERROR)
+            throw std::runtime_error("recvfrom() failed: " + std::to_string(WSAGetLastError()));
+
+        char ip_str[INET6_ADDRSTRLEN];
+        void* addr_ptr{nullptr};
+
+        if (sender.ss_family == AF_INET)
+        {
+            auto s = reinterpret_cast<sockaddr_in*>(&sender);
+            addr_ptr = &s->sin_addr;
+            sender_end_point.port = ntohs(s->sin_port);
+        }
+        if (sender.ss_family == AF_INET6)
+        {
+            auto s = reinterpret_cast<sockaddr_in6*>(&sender);
+            addr_ptr = &s->sin6_addr;
+            sender_end_point.port = ntohs(s->sin6_port);
+        }
+
+        inet_ntop(sender.ss_family, addr_ptr, ip_str, sizeof(ip_str));
+        sender_end_point.address = ip_str;
 
         return bytes;
     }
@@ -122,9 +173,41 @@ namespace es
     int WindowsSocket::send_data(const char* buffer, int buffer_size)
     {
         int bytes = send(m_socket, buffer, buffer_size, 0);
-        if (bytes < 0)
+
+        if (bytes == SOCKET_ERROR)
             throw std::runtime_error("send() failed: " + std::to_string(WSAGetLastError()));
 
         return bytes;
+    }
+
+    int WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
+    {
+        addrinfo* addr_info{resolve_address(end_point, 0)};
+
+        int bytes = sendto(m_socket, buffer, buffer_size, 0, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen));
+
+        freeaddrinfo(addr_info);
+
+        if (bytes == SOCKET_ERROR)
+            throw std::runtime_error("sendto() failed: " + std::to_string(WSAGetLastError()));
+
+        return bytes;
+    }
+
+    addrinfo* WindowsSocket::resolve_address(const EndPoint& end_point, int flags)
+    {
+        addrinfo* result{nullptr};
+        addrinfo hints{};
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = m_winsock_data.type;
+        hints.ai_protocol = m_winsock_data.protocol;
+        hints.ai_flags = flags;
+
+        std::string port_string = std::to_string(end_point.port);
+        int res = getaddrinfo(end_point.address.c_str(), port_string.c_str(), &hints, &result);
+        if (res != 0)
+            throw std::runtime_error("getaddrinfo() failed: " + std::to_string(res));
+
+        return result;
     }
 }
