@@ -6,7 +6,7 @@ namespace es
     {
         ipv4,
         ipv6,
-        unspecified
+        dual_stack
     };
 
     enum class Protocol
