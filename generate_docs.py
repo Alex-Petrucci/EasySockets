@@ -135,9 +135,9 @@ def document_file(filename: str) -> None:
                 f.write(into_comment(DOCS[doc_id], indentation))
 
 def main() -> None:
-    document_file("include/EasySockets/EasySockets.h")
-    document_file("include/EasySockets/Windows/WindowsSocket.h")
-    document_file("include/EasySockets/Windows/WinsockContext.h")
+    document_file("include/EasySockets/EasySockets.hpp")
+    document_file("include/EasySockets/Windows/WindowsSocket.hpp")
+    document_file("include/EasySockets/Windows/WinsockContext.hpp")
 
 if __name__ == "__main__":
     main()

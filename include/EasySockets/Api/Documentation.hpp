@@ -10,4 +10,8 @@
  * existing docs and replace them with the ones defined in the file.
  */
 
+/**
+ * Marks where to generate documentation from generate_docs.py.
+ * @param id the id that will be matched to get the documentation.
+ */
 #define ES_API_DOC(id)

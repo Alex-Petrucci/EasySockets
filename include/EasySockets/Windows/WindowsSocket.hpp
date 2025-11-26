@@ -2,9 +2,9 @@
 
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <EasySockets/Api/SocketTypes.h>
-#include <EasySockets/Api/Addresses.h>
-#include <EasySockets/Api/Documentation.h>
+#include <EasySockets/Api/SocketTypes.hpp>
+#include <EasySockets/Api/Addresses.hpp>
+#include <EasySockets/Api/Documentation.hpp>
 
 namespace es
 {

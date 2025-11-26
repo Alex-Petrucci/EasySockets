@@ -1,4 +1,4 @@
-#include <EasySockets/Windows/WindowsSocket.h>
+#include <EasySockets/Windows/WindowsSocket.hpp>
 
 #include <stdexcept>
 #include <winsock2.h>

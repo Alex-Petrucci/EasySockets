@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Api/SocketApi.h"
-#include "Api/ContextApi.h"
+#include "Api/SocketApi.hpp"
+#include "Api/ContextApi.hpp"
 
 #ifdef _WIN32
 
-#include "Windows/WindowsSocket.h"
-#include "Windows/WinsockContext.h"
+#include "Windows/WindowsSocket.hpp"
+#include "Windows/WinsockContext.hpp"
 
 namespace es
 {

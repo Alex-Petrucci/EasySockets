@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Addresses.h"
-#include "SocketTypes.h"
+#include "Addresses.hpp"
+#include "SocketTypes.hpp"
 
 namespace es
 {

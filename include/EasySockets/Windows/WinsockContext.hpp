@@ -1,7 +1,7 @@
 #pragma once
 
 #include <winsock2.h>
-#include <EasySockets/Api/Documentation.h>
+#include <EasySockets/Api/Documentation.hpp>
 
 namespace es
 {
