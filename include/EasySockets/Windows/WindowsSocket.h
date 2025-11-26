@@ -71,7 +71,7 @@ namespace es
 
         ES_API_DOC(socket_accept_connection)
         /**
-         * "Accepts incoming connections.
+         * Accepts incoming connections.
          * <br><code>.listen(int backlog)</code>must be called first.
          * @return New socket connected to the socket that was attempting
          * to connect.

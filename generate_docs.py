@@ -48,7 +48,7 @@ DOCS = {
     <br>Connections can be accepted with <code>.accept_connection</code>.
     """),
     "socket_accept_connection": textwrap.dedent("""\
-    "Accepts incoming connections.
+    Accepts incoming connections.
     <br><code>.listen(int backlog)</code>must be called first.
     @return New socket connected to the socket that was attempting
     to connect.
