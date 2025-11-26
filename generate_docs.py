@@ -71,7 +71,7 @@ DOCS = {
     """),
     "socket_send_data": textwrap.dedent("""\
     Sends data to the connected end point.
-    <br>Must
+    <br>Must be connected to another end point.
     @param buffer The buffer which data received will be placed into.
     @param buffer_size The size of the buffer provided.
     @return The amount of data in bytes sent.
