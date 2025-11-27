@@ -29,8 +29,6 @@ namespace es
             m_winsock_data.af = AF_INET;
             break;
         case IpVersion::ipv6:
-            m_winsock_data.af = AF_INET6;
-            break;
         case IpVersion::dual_stack:
             m_winsock_data.af = AF_INET6;
             break;
@@ -56,7 +54,7 @@ namespace es
 
         if (ip_version == IpVersion::dual_stack)
         {
-            const int no = 0; // has to be an int, despite winsock taking a char*
+            constexpr int no = 0; // has to be an int, despite winsock taking a char*
             if (setsockopt(m_socket, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<const char *>(&no), sizeof(no)) == SOCKET_ERROR)
                 throw std::runtime_error("setsockopt() failed: " + std::to_string(WSAGetLastError()));
         }
