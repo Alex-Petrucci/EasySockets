@@ -4,15 +4,23 @@ project(EasySockets)
 set(CMAKE_CXX_STANDARD 20)
 set(ESInclude "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
-    "${ESInclude}/*.h"
+file(GLOB_RECURSE ESHeaderFiles CONFIGURE_DEPENDS
+    "${ESInclude}/*.hpp"
 )
 
-message(STATUS "EasySockets source files: ${ESSourceFiles}")
+if(${WIN32})
+    file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/windows/*.cpp"
+    )
+endif()
 
-add_library(EasySockets STATIC ${ESSourceFiles})
+if(${UNIX})
+    file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/posix/*.cpp"
+    )
+endif()
+
+add_library(EasySockets STATIC ${ESHeaderFiles} ${ESSourceFiles})
 target_include_directories(EasySockets PUBLIC ${ESInclude})
 
 if(${WIN32})

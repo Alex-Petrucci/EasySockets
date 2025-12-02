@@ -39,11 +39,25 @@ namespace es
     using Context = WinsockContext;
 }
 
-#else // !_WIN32
+#elif __unix__
 
-#error EasySockets is only implemented for Windows currently
+#include "Posix/PosixSocket.hpp"
+#include "Posix/PosixContext.hpp"
 
-#endif // _WIN32
+namespace es
+{
+    ES_API_DOC(socket)
+    using Socket = PosixSocket;
+
+    ES_API_DOC(context)
+    using Context = PosixContext;
+}
+
+#else // !(_WIN32 || __unix__)
+
+#error EasySockets does not support this platform
+
+#endif // _WIN32/__unix__
 
 static_assert(es::SocketApi<es::Socket>,
     "Socket API for current platform is invalid. This problem is the library's fault, not the end user's.");

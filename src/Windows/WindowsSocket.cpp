@@ -17,7 +17,10 @@ namespace es
     WindowsSocket::~WindowsSocket()
     {
         if (m_socket != INVALID_SOCKET)
+        {
+            shutdown(m_socket, SD_SEND);
             closesocket(m_socket);
+        }
     }
 
     WindowsSocket::WindowsSocket(IpVersion ip_version, Protocol protocol)

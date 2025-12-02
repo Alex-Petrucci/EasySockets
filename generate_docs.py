@@ -138,6 +138,8 @@ def main() -> None:
     document_file("include/EasySockets/EasySockets.hpp")
     document_file("include/EasySockets/Windows/WindowsSocket.hpp")
     document_file("include/EasySockets/Windows/WinsockContext.hpp")
+    document_file("include/EasySockets/Posix/PosixSocket.hpp")
+    document_file("include/EasySockets/Posix/PosixContext.hpp")
 
 if __name__ == "__main__":
     main()
