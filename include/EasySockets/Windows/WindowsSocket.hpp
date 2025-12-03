@@ -119,7 +119,7 @@ namespace es
          * @param end_point The endpoint that the data will be sent to.
          * @return The amount of data in bytes sent.
          */
-        ssize_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
+        int64_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
     private:
         // data that winsock needs for the socket

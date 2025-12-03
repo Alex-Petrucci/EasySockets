@@ -197,7 +197,7 @@ namespace es
         return bytes;
     }
 
-    ssize_t WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
+    int64_t WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
     {
         addrinfo* addr_info{resolve_address(end_point, 0)};
 
