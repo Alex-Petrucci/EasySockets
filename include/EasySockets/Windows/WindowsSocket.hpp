@@ -86,7 +86,7 @@ namespace es
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes received.
          */
-        int receive_data(char* buffer, int buffer_size);
+        ssize_t receive_data(char* buffer, int buffer_size);
 
         ES_API_DOC(socket_receive_data_from)
         /**
@@ -98,7 +98,7 @@ namespace es
          * of the sender.
          * @return The amount of data in bytes received.
          */
-        int receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point);
+        ssize_t receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point);
 
         ES_API_DOC(socket_send_data)
         /**
@@ -108,7 +108,7 @@ namespace es
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes sent.
          */
-        int send_data(const char* buffer, int buffer_size);
+        ssize_t send_data(const char* buffer, int buffer_size);
 
         ES_API_DOC(socket_send_data_to)
         /**
@@ -119,7 +119,7 @@ namespace es
          * @param end_point The endpoint that the data will be sent to.
          * @return The amount of data in bytes sent.
          */
-        int send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
+        ssize_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
     private:
         // data that winsock needs for the socket

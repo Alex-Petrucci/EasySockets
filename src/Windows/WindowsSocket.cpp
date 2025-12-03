@@ -129,7 +129,7 @@ namespace es
         return accepting_socket;
     }
 
-    int WindowsSocket::receive_data(char* buffer, int buffer_size)
+    ssize_t WindowsSocket::receive_data(char* buffer, int buffer_size)
     {
         int bytes = recv(m_socket, buffer, buffer_size, 0);
 
@@ -139,7 +139,7 @@ namespace es
         return bytes;
     }
 
-    int WindowsSocket::receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point)
+    ssize_t WindowsSocket::receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point)
     {
         sockaddr_storage sender{};
         int sender_length = sizeof(sender);
@@ -171,7 +171,7 @@ namespace es
         return bytes;
     }
 
-    int WindowsSocket::send_data(const char* buffer, int buffer_size)
+    ssize_t WindowsSocket::send_data(const char* buffer, int buffer_size)
     {
         int bytes = send(m_socket, buffer, buffer_size, 0);
 
@@ -181,7 +181,7 @@ namespace es
         return bytes;
     }
 
-    int WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
+    ssize_t WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
     {
         addrinfo* addr_info{resolve_address(end_point, 0)};
 
