@@ -8,23 +8,23 @@ file(GLOB_RECURSE ESHeaderFiles CONFIGURE_DEPENDS
     "${ESInclude}/*.hpp"
 )
 
-if(${WIN32})
+if(WIN32)
     file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/windows/*.cpp"
     )
-endif()
-
-if(${UNIX})
+elseif(UNIX)
     file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/posix/*.cpp"
     )
+else()
+    message(FATAL_ERROR "This platform is not currently supported by EasySockets.")
 endif()
 
 add_library(EasySockets STATIC ${ESHeaderFiles} ${ESSourceFiles})
 target_include_directories(EasySockets PUBLIC ${ESInclude})
 set_target_properties(EasySockets PROPERTIES LINKER_LANGUAGE CXX)
 
-if(${WIN32})
+if(WIN32)
     target_link_libraries(EasySockets PUBLIC wsock32 ws2_32)
 endif()
 
