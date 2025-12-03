@@ -22,6 +22,7 @@ endif()
 
 add_library(EasySockets STATIC ${ESHeaderFiles} ${ESSourceFiles})
 target_include_directories(EasySockets PUBLIC ${ESInclude})
+set_target_properties(EasySockets PROPERTIES LINKER_LANGUAGE CXX)
 
 if(${WIN32})
     target_link_libraries(EasySockets PUBLIC wsock32 ws2_32)
