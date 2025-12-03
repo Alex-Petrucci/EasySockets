@@ -3,19 +3,22 @@ project(EasySockets)
 
 set(CMAKE_CXX_STANDARD 20)
 set(ESInclude "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(ESSourceFiles "")
 
 file(GLOB_RECURSE ESHeaderFiles CONFIGURE_DEPENDS
     "${ESInclude}/*.hpp"
 )
 
 if(WIN32)
-    file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
+    file(GLOB_RECURSE ESWinSrc CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/windows/*.cpp"
     )
+    list(APPEND ESSourceFiles ${ESWinSrc})
 elseif(UNIX)
-    file(GLOB_RECURSE ESSourceFiles CONFIGURE_DEPENDS
+    file(GLOB_RECURSE ESPosixSrc CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/src/posix/*.cpp"
     )
+    list(APPEND ESSourceFiles ${ESPosixSrc})
 else()
     message(FATAL_ERROR "This platform is not currently supported by EasySockets.")
 endif()

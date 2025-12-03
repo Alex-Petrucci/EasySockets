@@ -2,6 +2,7 @@
 
 #include "Api/SocketApi.hpp"
 #include "Api/ContextApi.hpp"
+#include "Api/Documentation.hpp"
 
 #if defined(_WIN32)
 
