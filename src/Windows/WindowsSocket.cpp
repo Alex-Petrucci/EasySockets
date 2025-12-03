@@ -85,26 +85,42 @@ namespace es
     {
         addrinfo* addr_info{resolve_address(end_point, AI_PASSIVE)};
 
-        if (bind(m_socket, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen)) == SOCKET_ERROR)
+        bool success = false;
+        for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
         {
-            freeaddrinfo(addr_info);
-            throw std::runtime_error("bind() failed: " + std::to_string(WSAGetLastError()));
+            if (bind(m_socket, node->ai_addr, static_cast<int>(node->ai_addrlen)) == SOCKET_ERROR)
+            {
+                continue;
+            }
+            success = true;
+            break;
         }
 
         freeaddrinfo(addr_info);
+
+        if (!success)
+            throw std::runtime_error("bind() failed: " + std::to_string(WSAGetLastError()));
     }
 
     void WindowsSocket::connect_to(const EndPoint& end_point)
     {
         addrinfo* addr_info{resolve_address(end_point, 0)};
 
-        if (connect(m_socket, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen)) == SOCKET_ERROR)
+        bool success = false;
+        for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
         {
-            freeaddrinfo(addr_info);
-            throw std::runtime_error("connect() failed: " + std::to_string(WSAGetLastError()));
+            if (connect(m_socket, node->ai_addr, static_cast<int>(node->ai_addrlen)) == SOCKET_ERROR)
+            {
+                continue;
+            }
+            success = true;
+            break;
         }
 
         freeaddrinfo(addr_info);
+
+        if (!success)
+            throw std::runtime_error("connect() failed: " + std::to_string(WSAGetLastError()));
     }
 
     void WindowsSocket::listen_for_connections(int backlog)
@@ -185,7 +201,14 @@ namespace es
     {
         addrinfo* addr_info{resolve_address(end_point, 0)};
 
-        int bytes = sendto(m_socket, buffer, buffer_size, 0, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen));
+        int bytes = SOCKET_ERROR;
+
+        for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
+        {
+            bytes = sendto(m_socket, buffer, buffer_size, 0, addr_info->ai_addr, static_cast<int>(addr_info->ai_addrlen));
+            if (bytes != SOCKET_ERROR)
+                break;
+        }
 
         freeaddrinfo(addr_info);
 
