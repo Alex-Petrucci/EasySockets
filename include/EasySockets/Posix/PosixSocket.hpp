@@ -85,7 +85,7 @@ namespace es
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes received.
          */
-        ssize_t receive_data(char* buffer, int buffer_size);
+        int64_t receive_data(char* buffer, int buffer_size);
 
         ES_API_DOC(socket_receive_data_from)
         /**
@@ -97,7 +97,7 @@ namespace es
          * of the sender.
          * @return The amount of data in bytes received.
          */
-        ssize_t receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point);
+        int64_t receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point);
 
         ES_API_DOC(socket_send_data)
         /**
@@ -107,7 +107,7 @@ namespace es
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes sent.
          */
-        ssize_t send_data(const char* buffer, int buffer_size);
+        int64_t send_data(const char* buffer, int buffer_size);
 
         ES_API_DOC(socket_send_data_to)
         /**
@@ -118,7 +118,7 @@ namespace es
          * @param end_point The endpoint that the data will be sent to.
          * @return The amount of data in bytes sent.
          */
-        ssize_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
+        int64_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
     private:
         struct SocketData

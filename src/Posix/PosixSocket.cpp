@@ -141,7 +141,7 @@ namespace es
         return return_socket;
     }
 
-    ssize_t PosixSocket::receive_data(char* buffer, int buffer_size)
+    int64_t PosixSocket::receive_data(char* buffer, int buffer_size)
     {
         ssize_t bytes = recv(m_socket, buffer, buffer_size, 0);
         if (bytes < 0)
@@ -150,7 +150,7 @@ namespace es
         return bytes;
     }
 
-    ssize_t PosixSocket::receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point)
+    int64_t PosixSocket::receive_data_from(char* buffer, int buffer_size, EndPoint& sender_end_point)
     {
         sockaddr_storage sender{};
         socklen_t sender_length{sizeof(sender)};
@@ -176,7 +176,7 @@ namespace es
         return bytes;
     }
 
-    ssize_t PosixSocket::send_data(const char* buffer, int buffer_size)
+    int64_t PosixSocket::send_data(const char* buffer, int buffer_size)
     {
         ssize_t bytes = send(m_socket, buffer, buffer_size, 0);
         if (bytes < 0)
@@ -185,7 +185,7 @@ namespace es
         return bytes;
     }
 
-    ssize_t PosixSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
+    int64_t PosixSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
     {
         addrinfo* addr_info{resolve_address(end_point)};
 
