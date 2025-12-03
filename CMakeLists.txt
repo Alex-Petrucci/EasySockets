@@ -11,12 +11,12 @@ file(GLOB_RECURSE ESHeaderFiles CONFIGURE_DEPENDS
 
 if(WIN32)
     file(GLOB_RECURSE ESWinSrc CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/windows/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/Windows/*.cpp"
     )
     list(APPEND ESSourceFiles ${ESWinSrc})
 elseif(UNIX)
     file(GLOB_RECURSE ESPosixSrc CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/posix/*.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/Posix/*.cpp"
     )
     list(APPEND ESSourceFiles ${ESPosixSrc})
 else()
