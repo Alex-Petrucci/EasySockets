@@ -189,19 +189,19 @@ namespace es
     {
         addrinfo* addr_info{resolve_address(end_point)};
 
-        bool success = false;
+        ssize_t bytes = -1;
         for (addrinfo* info = addr_info; info != nullptr; info = info->ai_next)
         {
-            if (sendto(m_socket, buffer, buffer_size, 0, info->ai_addr, info->ai_addrlen) < 0)
+            bytes = sendto(m_socket, buffer, buffer_size, 0, info->ai_addr, info->ai_addrlen);
+            if (bytes < 0)
             {
-                success = true;
                 break;
             }
         }
 
         freeaddrinfo(addr_info);
 
-        if (!success)
+        if (bytes < 0)
             throw std::runtime_error("sendto() failed: " + std::string{strerror(errno)});
 
         return buffer_size;
