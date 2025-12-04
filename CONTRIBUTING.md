@@ -23,3 +23,11 @@ branch will be merged into the `main` branch.
 
 If you are struggling with a contribution, feel free to post something
 on the discussions tab so that someone can help you out.
+
+If your code involves documentation that is shared across
+multple places, then you should use `ES_API_DOC(<doc-name>)` and run 
+`generate_docs.py` to automatically add in the documenation.
+This ensures that documentation remains consistent. If there are docs
+that you want to reuse that aren't already in `generate_docs.py` then
+feel free to add them yourself. The code inside there should be
+self-explanitory.
