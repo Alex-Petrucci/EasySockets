@@ -52,8 +52,11 @@ int main()
 ## Documentation
 All documentation is on the [EasySockets website]() *(to be added)*
 
+If something is confusing, or for some reason is not part of the documentation,
+feel free to post something in the discussions tab.
+
 ## Contributing
-See [contributing.md](contrubiting.md) *(to be added)*
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 If you would like to see a new feature, make a
 change to the library or notify us of bugs, feel 
