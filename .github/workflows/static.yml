@@ -34,7 +34,8 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get install -y doxygen graphviz
       - name: Build Doxygen Docs
-        run: doxygen doc/Doxyfile
+        working-directory: doc
+        run: doxygen Doxyfile
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
