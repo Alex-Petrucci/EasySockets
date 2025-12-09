@@ -50,7 +50,7 @@ int main()
 ```
 
 ## Documentation
-All documentation is on the [EasySockets website]() *(to be added)*
+All documentation is on the [EasySockets website](https://alex-petrucci.github.io/EasySockets/)
 
 If something is confusing, or for some reason is not part of the documentation,
 feel free to post something in the discussions tab.
