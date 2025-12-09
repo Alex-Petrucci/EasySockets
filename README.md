@@ -43,7 +43,7 @@ int main()
     int64_t bytes{accept.receive_data(buffer, sizeof(buffer))};
     
     // output the received data
-    std::cout << "Received:\n" << std::string{buffer, bytes} << '\n';
+    std::cout << "Received:\n" << std::string{buffer, static_cast<size_t>(bytes)} << '\n';
     
     return 0;
 }
