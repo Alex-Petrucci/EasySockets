@@ -8,6 +8,8 @@
  *
  * Relevant files will be parsed by generate_docs.py, which will clear all the
  * existing docs and replace them with the ones defined in the file.
+ *
+ * This is only done because most IDEs don't pick up on @copydoc for tooltips.
  */
 
 /**
@@ -15,3 +17,17 @@
  * @param id the id that will be matched to get the documentation.
  */
 #define ES_API_DOC(id)
+
+
+// DOXYGEN GROUPS
+
+/**
+ * @defgroup CrossPlatformApi
+ * The API which users should be used with EasySockets.
+ */
+
+/**
+ * @defgroup PlatformSpecificApi
+ * The API which should only be used in the implementation.
+ * @internal
+ */

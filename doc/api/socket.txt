@@ -1,0 +1,9 @@
+@brief An object which represents a connection between two applications.
+@details On creation, type of ip addresses that the socket will use and the
+layer 4/transport layer protocol is specified.
+<br>From this, methods like <code>.bind_to(EndPoint end_point)</code>
+and <code>.connect_to(EndPoint end_point)</code> to give the socket
+an address and port so that it can start communicating with other applications.
+<br>For connectionless protocols like UDP, data can be sent and received
+without binding or connecting first.
+<br>Can be moved from but not copied. Members are the same across all implementations.

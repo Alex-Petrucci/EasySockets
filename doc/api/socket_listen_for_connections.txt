@@ -1,0 +1,7 @@
+@brief Makes the socket start listening for incoming connections.
+@details Must be bound with <code>.bind(EndPoint end_point)</code>
+before being called.
+@param backlog The amount of connections that can be waiting
+to be accepted at a time. If the amount of connections exceeds
+the backlog, then new connections will be dropped.
+<br>Connections can be accepted with <code>.accept_connection</code>.

@@ -1,0 +1,7 @@
+@brief Waits to receive data from any endpoint.
+@details Can only be used with connectionless protocols like UDP.
+@param buffer The buffer which data received will be placed into.
+@param buffer_size The size of the buffer provided.
+@param sender_end_point An out parameter will give back the end point
+of the sender.
+@return The amount of data in bytes received.

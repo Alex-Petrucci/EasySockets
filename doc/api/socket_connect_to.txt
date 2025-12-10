@@ -1,0 +1,2 @@
+@brief Connects a socket to the given end point.
+@param end_point The endpoint that the socket will use.

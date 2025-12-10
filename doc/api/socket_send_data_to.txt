@@ -1,0 +1,6 @@
+@brief Sends data to the provided end point.
+@details Must be connected to another end point.
+@param buffer The buffer which data received will be placed into.
+@param buffer_size The size of the buffer provided.
+@param end_point The endpoint that the data will be sent to.
+@return The amount of data in bytes sent.
