@@ -22,12 +22,12 @@
 // DOXYGEN GROUPS
 
 /**
- * @defgroup CrossPlatformApi
+ * @defgroup CrossPlatformApi Cross-Platform API
  * The API which users should be used with EasySockets.
  */
 
 /**
- * @defgroup PlatformSpecificApi
+ * @defgroup PlatformSpecificApi Platform Specific API
  * The API which should only be used in the implementation.
  * @internal
  */
