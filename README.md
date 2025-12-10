@@ -1,4 +1,4 @@
-# EasySockets v1.0.0
+# EasySockets <sub>v1.0.0</sub>
 Simple to use, cross-platform socket library for C++.
 
 ## Features
