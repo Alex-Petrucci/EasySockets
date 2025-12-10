@@ -7,24 +7,25 @@
 
 namespace es
 {
+    /// @ingroup PlatformSpecificApi
     ES_API_DOC(socket)
     /**
-     * An object which represents a connection between two applications.
-     * <br>On creation, type of ip addresses that the socket will use and the
-     * layer 4/transport layer protocol is specified. 
-     * <br>From this, methods like <code>.bind_to(EndPoint end_point)</code> 
-     * and <code>.connect_to(EndPoint end_point)</code> to give the socket 
+     * @brief An object which represents a connection between two applications.
+     * @details On creation, type of ip addresses that the socket will use and the
+     * layer 4/transport layer protocol is specified.
+     * <br>From this, methods like <code>.bind_to(EndPoint end_point)</code>
+     * and <code>.connect_to(EndPoint end_point)</code> to give the socket
      * an address and port so that it can start communicating with other applications.
      * <br>For connectionless protocols like UDP, data can be sent and received
      * without binding or connecting first.
-     * <br>Can be moved from but not copied.
+     * <br>Can be moved from but not copied. Members are the same across all implementations.
      */
     class PosixSocket
     {
     public:
         ES_API_DOC(socket_constructor)
         /**
-         * Constructor for Socket.
+         * @brief Constructor for Socket.
          * @param ip_version The version of ip addresses that the socket will use.
          * @param protocol The layer 4/transport layer protocol that the socket will use.
          */
@@ -42,7 +43,7 @@ namespace es
 
         ES_API_DOC(socket_bind_to)
         /**
-         * Binds a socket to the given end point.
+         * @brief Binds a socket to the given end point.
          * @param end_point The endpoint that the socket will use. <code>"0.0.0.0"</code>
          * will bind to all IPv4 interfaces, <code>"::0"</code>will bind to all IPv6 interfaces
          * and <code>"::"</code>" will bind to all interfaces.
@@ -51,15 +52,15 @@ namespace es
 
         ES_API_DOC(socket_connect_to)
         /**
-         * Connects a socket to the given end point.
+         * @brief Connects a socket to the given end point.
          * @param end_point The endpoint that the socket will use.
          */
         void connect_to(const EndPoint& end_point);
 
         ES_API_DOC(socket_listen_for_connections)
         /**
-         * Makes the socket start listening for incoming connections.
-         * <br>Must be bound with <code>.bind(EndPoint end_point)</code>
+         * @brief Makes the socket start listening for incoming connections.
+         * @details Must be bound with <code>.bind(EndPoint end_point)</code>
          * before being called.
          * @param backlog The amount of connections that can be waiting
          * to be accepted at a time. If the amount of connections exceeds
@@ -70,8 +71,8 @@ namespace es
 
         ES_API_DOC(socket_accept_connection)
         /**
-         * Accepts incoming connections.
-         * <br><code>.listen(int backlog)</code>must be called first.
+         * @brief Accepts incoming connections.
+         * @details <code>.listen(int backlog)</code>must be called first.
          * @return New socket connected to the socket that was attempting
          * to connect.
          */
@@ -79,8 +80,8 @@ namespace es
 
         ES_API_DOC(socket_receive_data)
         /**
-         * Waits to receive data from the connected end point.
-         * <br>Must be connected to another end point.
+         * @brief Waits to receive data from the connected end point.
+         * @details Must be connected to another end point.
          * @param buffer The buffer which data received will be placed into.
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes received.
@@ -89,8 +90,8 @@ namespace es
 
         ES_API_DOC(socket_receive_data_from)
         /**
-         * Waits to receive data from any endpoint.
-         * <br>Can only be used with connectionless protocols like UDP.
+         * @brief Waits to receive data from any endpoint.
+         * @details Can only be used with connectionless protocols like UDP.
          * @param buffer The buffer which data received will be placed into.
          * @param buffer_size The size of the buffer provided.
          * @param sender_end_point An out parameter will give back the end point
@@ -101,8 +102,8 @@ namespace es
 
         ES_API_DOC(socket_send_data)
         /**
-         * Sends data to the connected end point.
-         * <br>Must be connected to another end point.
+         * @brief Sends data to the connected end point.
+         * @details Must be connected to another end point.
          * @param buffer The buffer which data received will be placed into.
          * @param buffer_size The size of the buffer provided.
          * @return The amount of data in bytes sent.
@@ -111,8 +112,8 @@ namespace es
 
         ES_API_DOC(socket_send_data_to)
         /**
-         * Sends data to the provided end point.
-         * <br>Must be connected to another end point.
+         * @brief Sends data to the provided end point.
+         * @details Must be connected to another end point.
          * @param buffer The buffer which data received will be placed into.
          * @param buffer_size The size of the buffer provided.
          * @param end_point The endpoint that the data will be sent to.

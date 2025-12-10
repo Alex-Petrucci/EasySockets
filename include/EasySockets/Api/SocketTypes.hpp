@@ -3,7 +3,9 @@
 namespace es
 {
     /**
-     * Version of IP address.
+     * @ingroup CrossPlatformApi
+     *
+     * @brief Version of IP address.
      */
     enum class IpVersion
     {
@@ -16,7 +18,9 @@ namespace es
     };
 
     /**
-     * Layer 4/transport layer protocol.
+     * @ingroup CrossPlatformApi
+     *
+     * @brief Layer 4/transport layer protocol.
      */
     enum class Protocol
     {

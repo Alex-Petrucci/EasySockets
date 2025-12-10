@@ -1,0 +1,4 @@
+@brief Binds a socket to the given end point.
+@param end_point The endpoint that the socket will use. <code>"0.0.0.0"</code>
+will bind to all IPv4 interfaces, <code>"::0"</code>will bind to all IPv6 interfaces
+and <code>"::"</code>" will bind to all interfaces.

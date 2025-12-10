@@ -1,0 +1,4 @@
+@brief Accepts incoming connections.
+@details <code>.listen(int backlog)</code>must be called first.
+@return New socket connected to the socket that was attempting
+to connect.

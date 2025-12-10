@@ -1,0 +1,3 @@
+@brief Constructor for Socket.
+@param ip_version The version of ip addresses that the socket will use.
+@param protocol The layer 4/transport layer protocol that the socket will use.
