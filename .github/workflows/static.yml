@@ -35,10 +35,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wget
-          wget https://www.doxygen.nl/files/doxygen-1.10.0.linux.bin.tar.gz
-          tar -xzf doxygen-1.10.0.linux.bin.tar.gz
-          sudo mv doxygen-1.10.0/bin/doxygen /usr/local/bin/doxygen
-          rm -rf doxygen-1.10.0 doxygen-1.10.0.linux.bin.tar.gz
+          wget https://www.doxygen.nl/files/doxygen-1.15.0.linux.bin.tar.gz
+          tar -xzf doxygen-1.15.0.linux.bin.tar.gz
+          sudo mv doxygen-1.15.0/bin/doxygen /usr/local/bin/doxygen
+          rm -rf doxygen-1.15.0 doxygen-1.15.0.linux.bin.tar.gz
       - name: Build Doxygen Docs
         working-directory: doc
         run: doxygen Doxyfile
