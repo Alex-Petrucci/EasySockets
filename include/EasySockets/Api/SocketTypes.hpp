@@ -10,11 +10,11 @@ namespace es
     enum class IpVersion
     {
         /// An IPv4 address.
-        ipv4,
+        IPV4,
         /// An Ipv6 address.
-        ipv6,
+        IPV6,
         /// An IPv6 address which allows for conversions from IPv4.
-        dual_stack
+        DUAL_STACK
     };
 
     /**
@@ -25,8 +25,8 @@ namespace es
     enum class Protocol
     {
         /// TCP protocol.
-        tcp,
+        TCP,
         /// UDP protocol.
-        udp
+        UDP
     };
 }

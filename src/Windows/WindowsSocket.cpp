@@ -28,21 +28,21 @@ namespace es
     {
         switch (ip_version)
         {
-        case IpVersion::ipv4:
+        case IpVersion::IPV4:
             m_winsock_data.af = AF_INET;
             break;
-        case IpVersion::ipv6:
-        case IpVersion::dual_stack:
+        case IpVersion::IPV6:
+        case IpVersion::DUAL_STACK:
             m_winsock_data.af = AF_INET6;
             break;
         }
         switch (protocol)
         {
-        case Protocol::tcp:
+        case Protocol::TCP:
             m_winsock_data.type = SOCK_STREAM;
             m_winsock_data.protocol = IPPROTO_TCP;
             break;
-        case Protocol::udp:
+        case Protocol::UDP:
             m_winsock_data.type = SOCK_DGRAM;
             m_winsock_data.protocol = IPPROTO_UDP;
             break;
@@ -55,7 +55,7 @@ namespace es
             throw std::runtime_error("socket() failed: " + std::to_string(WSAGetLastError()));
         }
 
-        if (ip_version == IpVersion::dual_stack)
+        if (ip_version == IpVersion::DUAL_STACK)
         {
             constexpr int no = 0; // has to be an int, despite winsock taking a char*
             if (setsockopt(m_socket, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<const char *>(&no), sizeof(no)) == SOCKET_ERROR)

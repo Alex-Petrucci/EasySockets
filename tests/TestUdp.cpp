@@ -11,12 +11,12 @@ int main()
         es::Context context;
 
         std::cout << "Creating server socket\n";
-        es::Socket server{es::IpVersion::dual_stack, es::Protocol::udp};
+        es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::UDP};
         std::cout << "Binding server\n";
         server.bind_to({"::", 8080});
 
         std::cout << "Creating ipv4 client socket\n";
-        es::Socket client_ipv4{es::IpVersion::ipv4, es::Protocol::udp};
+        es::Socket client_ipv4{es::IpVersion::IPV4, es::Protocol::UDP};
         std::cout << "Sending data from ipv4 client\n";
         client_ipv4.send_data_to(data.c_str(), data.length(), {"127.0.0.1", 8080});
 
@@ -33,7 +33,7 @@ int main()
         }
 
         std::cout << "Creating ipv6 client socket\n";
-        es::Socket client_ipv6{es::IpVersion::ipv6, es::Protocol::udp};
+        es::Socket client_ipv6{es::IpVersion::IPV6, es::Protocol::UDP};
         std::cout << "Sending data from ipv6 client\n";
         client_ipv6.send_data_to(data.c_str(), data.length(), {"::1", 8080});
 
