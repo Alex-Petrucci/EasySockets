@@ -1,5 +1,5 @@
 # EasySockets
-<small>Version 1.0.0</small>
+<small>Version 2.0.0</small>
 
 Simple to use, cross-platform socket library for C++.
 
@@ -56,6 +56,9 @@ All documentation is on the [EasySockets website](https://alex-petrucci.github.i
 
 If something is confusing, or for some reason is not part of the documentation,
 feel free to post something in the discussions tab.
+
+## Changelog
+You can view the changelog [here](CHANGELOG.md).
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md)

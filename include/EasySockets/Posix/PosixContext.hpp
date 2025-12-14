@@ -27,5 +27,7 @@ namespace es
         PosixContext(PosixContext&& other) noexcept = default;
         PosixContext& operator=(PosixContext&& other) noexcept;
         ~PosixContext() = default;
+
+        void shutdown() {}
     };
 }
