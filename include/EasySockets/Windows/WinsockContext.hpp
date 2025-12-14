@@ -28,6 +28,11 @@ namespace es
         WinsockContext& operator=(WinsockContext&& other) noexcept;
         ~WinsockContext();
 
+        ES_API_DOC(context_shutdown)
+        /**
+         * @brief Terminates the context.
+         * @details Will be called when destructor is called.
+         */
         void shutdown();
 
     private:
