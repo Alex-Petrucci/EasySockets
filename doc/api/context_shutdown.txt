@@ -1,0 +1,2 @@
+@brief Terminates the context.
+@details Will be called when destructor is called.

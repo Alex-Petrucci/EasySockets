@@ -21,22 +21,22 @@ namespace es
     {
         switch (ip_version)
         {
-        case IpVersion::ipv4:
+        case IpVersion::IPV4:
             m_socket_data.af = AF_INET;
             break;
-        case IpVersion::ipv6:
-        case IpVersion::dual_stack:
+        case IpVersion::IPV6:
+        case IpVersion::DUAL_STACK:
             m_socket_data.af = AF_INET6;
             break;
         }
 
         switch (protocol)
         {
-        case Protocol::tcp:
+        case Protocol::TCP:
             m_socket_data.type = SOCK_STREAM;
             m_socket_data.protocol = IPPROTO_TCP;
             break;
-        case Protocol::udp:
+        case Protocol::UDP:
             m_socket_data.type = SOCK_DGRAM;
             m_socket_data.protocol = IPPROTO_UDP;
             break;
@@ -54,7 +54,7 @@ namespace es
 
         if (m_socket_data.af == AF_INET6)
         {
-            int not_dual_stack = ip_version == IpVersion::dual_stack ? 0 : 1;
+            int not_dual_stack = ip_version == IpVersion::DUAL_STACK ? 0 : 1;
             if (setsockopt(m_socket, IPPROTO_IPV6, IPV6_V6ONLY, &not_dual_stack, sizeof(not_dual_stack)) < 0)
                 throw std::runtime_error("setsockopt() failed: " + std::string{strerror(errno)});
         }

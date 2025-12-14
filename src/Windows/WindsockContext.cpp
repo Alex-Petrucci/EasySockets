@@ -29,7 +29,11 @@ namespace es
 
     WinsockContext::~WinsockContext()
     {
-        WSACleanup();
+        shutdown();
     }
 
+    void WinsockContext::shutdown()
+    {
+        WSACleanup();
+    }
 }

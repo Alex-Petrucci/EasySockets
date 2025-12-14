@@ -27,5 +27,12 @@ namespace es
         PosixContext(PosixContext&& other) noexcept = default;
         PosixContext& operator=(PosixContext&& other) noexcept;
         ~PosixContext() = default;
+
+        ES_API_DOC(context_shutdown)
+        /**
+         * @brief Terminates the context.
+         * @details Will be called when destructor is called.
+         */
+        void shutdown() {}
     };
 }
