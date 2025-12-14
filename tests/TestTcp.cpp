@@ -11,14 +11,14 @@ int main()
         es::Context context{};
 
         std::cout << "Creating server socket\n";
-        es::Socket server{es::IpVersion::dual_stack, es::Protocol::tcp};
+        es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::TCP};
         std::cout << "Binding server socket\n";
         server.bind_to({"::", 8080});
         std::cout << "Start listening on server\n";
         server.listen_for_connections(2);
 
         std::cout << "Creating client ipv4 socket\n";
-        es::Socket client_ipv4{es::IpVersion::ipv4, es::Protocol::tcp};
+        es::Socket client_ipv4{es::IpVersion::IPV4, es::Protocol::TCP};
         std::cout << "Connecting ipv4 client to server\n";
         client_ipv4.connect_to({"127.0.0.1", 8080});
 
@@ -39,7 +39,7 @@ int main()
         }
 
         std::cout << "Creating client ipv6 socket\n";
-        es::Socket client_ipv6{es::IpVersion::ipv6, es::Protocol::tcp};
+        es::Socket client_ipv6{es::IpVersion::IPV6, es::Protocol::TCP};
         std::cout << "Connecting ipv6 client to server\n";
         client_ipv6.connect_to({"::1", 8080});
 
