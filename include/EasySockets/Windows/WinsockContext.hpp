@@ -28,6 +28,8 @@ namespace es
         WinsockContext& operator=(WinsockContext&& other) noexcept;
         ~WinsockContext();
 
+        void shutdown();
+
     private:
         WSADATA m_wsa_data;
     };
