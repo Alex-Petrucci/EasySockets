@@ -122,6 +122,14 @@ namespace es
          */
         int64_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
+        ES_API_DOC(make_connected_tcp)
+        /**
+         * @brief Makes a TCP socket connected to the given endpoint.
+         * @param end_point The endpoint that the socket is attempting to connect to.
+         * @return The connected socket.
+         */
+        static WindowsSocket make_connected_tcp(const EndPoint& end_point);
+
     private:
         // data that winsock needs for the socket
         struct WinsockData
@@ -135,7 +143,7 @@ namespace es
         WindowsSocket();
 
         // must free with freeaddrinfo
-        addrinfo* resolve_address(const EndPoint& end_point, int flags);
+        static addrinfo* resolve_address(const WinsockData& winsock_data, const EndPoint& end_point, int flags);
 
         SOCKET m_socket;
         WinsockData m_winsock_data;

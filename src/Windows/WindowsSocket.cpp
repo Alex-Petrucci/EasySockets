@@ -83,7 +83,7 @@ namespace es
 
     void WindowsSocket::bind_to(const EndPoint& end_point)
     {
-        addrinfo* addr_info{resolve_address(end_point, AI_PASSIVE)};
+        addrinfo* addr_info{resolve_address(m_winsock_data, end_point, AI_PASSIVE)};
 
         bool success = false;
         for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
@@ -104,7 +104,7 @@ namespace es
 
     void WindowsSocket::connect_to(const EndPoint& end_point)
     {
-        addrinfo* addr_info{resolve_address(end_point, 0)};
+        addrinfo* addr_info{resolve_address(m_winsock_data, end_point, 0)};
 
         bool success = false;
         for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
@@ -199,7 +199,7 @@ namespace es
 
     int64_t WindowsSocket::send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point)
     {
-        addrinfo* addr_info{resolve_address(end_point, 0)};
+        addrinfo* addr_info{resolve_address(m_winsock_data, end_point, 0)};
 
         int bytes = SOCKET_ERROR;
 
@@ -218,13 +218,13 @@ namespace es
         return bytes;
     }
 
-    addrinfo* WindowsSocket::resolve_address(const EndPoint& end_point, int flags)
+    addrinfo* WindowsSocket::resolve_address(const WinsockData& winsock_data, const EndPoint& end_point, int flags)
     {
         addrinfo* result{nullptr};
         addrinfo hints{};
         hints.ai_family = AF_UNSPEC;
-        hints.ai_socktype = m_winsock_data.type;
-        hints.ai_protocol = m_winsock_data.protocol;
+        hints.ai_socktype = winsock_data.type;
+        hints.ai_protocol = winsock_data.protocol;
         hints.ai_flags = flags;
 
         std::string port_string = std::to_string(end_point.port);
@@ -233,5 +233,35 @@ namespace es
             throw std::runtime_error("getaddrinfo() failed: " + std::to_string(res));
 
         return result;
+    }
+
+    WindowsSocket WindowsSocket::make_connected_tcp(const EndPoint& end_point)
+    {
+        WinsockData winsock_data = {.af = AF_UNSPEC, .type = SOCK_STREAM, .protocol = IPPROTO_TCP};
+        addrinfo* addr_info = resolve_address(winsock_data, end_point, 0);
+
+        for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
+        {
+            SOCKET sock = socket(node->ai_family, node->ai_socktype, node->ai_protocol);
+
+            if (connect(sock, node->ai_addr, node->ai_addrlen) != SOCKET_ERROR)
+            {
+                WindowsSocket s{};
+                s.m_socket = sock;
+                s.m_winsock_data.af = node->ai_family;
+                s.m_winsock_data.type = node->ai_socktype;
+                s.m_winsock_data.protocol = node->ai_protocol;
+                freeaddrinfo(addr_info);
+                return s;
+            }
+
+            closesocket(sock);
+        }
+
+        freeaddrinfo(addr_info);
+
+        throw std::runtime_error("connect() failed for all resolved addresses");
+
+        return WindowsSocket{};
     }
 }
