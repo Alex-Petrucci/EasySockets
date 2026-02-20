@@ -33,7 +33,7 @@ int main()
     
     // create a socket which accepts IPv6 addresses and 
     // converted IPv4 addressess, using TCP
-    es::Socket server{es::IpVersion::dual_stack, es::Protocol::tcp};
+    es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::TCP};
     server.bind_to({"::", 8080}); // Bind the socket to all interfaces on port 8080
     
     server.listen_for_connections(1); // 1 is the backlog
