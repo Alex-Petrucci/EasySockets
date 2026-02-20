@@ -16,6 +16,7 @@ namespace es
         { t.receive_data_from(buffer, len, end_point) } -> std::same_as<int64_t>;
         { t.send_data(buffer, len) } -> std::same_as<int64_t>;
         { t.send_data_to(buffer, len, end_point) } -> std::same_as<int64_t>;
+        { T::make_connected_tcp(end_point) } -> std::same_as<T>;
     }
     && std::constructible_from<T, IpVersion, Protocol>
     && !std::copyable<T>
