@@ -1,5 +1,5 @@
 # EasySockets
-<small>Version 2.0.0</small>
+<small>Version 2.1.0</small>
 
 Simple to use, cross-platform socket library for C++.
 
@@ -31,10 +31,8 @@ int main()
 {
     es::Context context{}; // context object required to use sockets
     
-    // create a socket which accepts IPv6 addresses and 
-    // converted IPv4 addressess, using TCP
-    es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::TCP};
-    server.bind_to({"::", 8080}); // Bind the socket to all interfaces on port 8080
+    // create a socket bound to port 8080
+    es::Socket server = es::Socket::make_bound_tcp(8080);
     
     server.listen_for_connections(1); // 1 is the backlog
     

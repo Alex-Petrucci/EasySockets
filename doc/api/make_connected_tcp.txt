@@ -1,0 +1,3 @@
+@brief Makes a TCP socket connected to the given endpoint.
+@param end_point The endpoint that the socket is attempting to connect to.
+@return The connected socket.

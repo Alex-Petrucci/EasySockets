@@ -121,6 +121,42 @@ namespace es
          */
         int64_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
+        ES_API_DOC(make_connected_tcp)
+        /**
+         * @brief Makes a TCP socket connected to the given endpoint.
+         * @param end_point The endpoint that the socket is attempting to connect to.
+         * @return The connected socket.
+         */
+        static PosixSocket make_connected_tcp(const EndPoint& end_point);
+
+        ES_API_DOC(make_connected_udp)
+        /**
+         * @brief Makes a UDP socket connected to the given endpoint.
+         * @param end_point The endpoint that the socket is attempting to connect to.
+         * @return The connected socket.
+         */
+        static PosixSocket make_connected_udp(const EndPoint& end_point);
+
+        ES_API_DOC(make_bound_tcp)
+        /**
+         * @brief Makes a TCP socket bound to the given port.
+         * @param port The port which the socket will be bound to.
+         * @param ip_version Optional paramater for the IP version that the
+         * socket will use. Defaults to `IpVersion::DUAL_STACK`.
+         * @return The bound socket.
+         */
+        static PosixSocket make_bound_tcp(Port port, IpVersion ip_version = IpVersion::DUAL_STACK);
+
+        ES_API_DOC(make_bound_udp)
+        /**
+         * @brief Makes a UDP socket bound to the given port.
+         * @param port The port which the socket will be bound to.
+         * @param ip_version Optional paramater for the IP version that the
+         * socket will use. Defaults to `IpVersion::DUAL_STACK`.
+         * @return The bound socket.
+         */
+        static PosixSocket make_bound_udp(Port port, IpVersion ip_version = IpVersion::DUAL_STACK);
+
     private:
         struct SocketData
         {
@@ -131,7 +167,7 @@ namespace es
 
         PosixSocket();
 
-        addrinfo* resolve_address(const EndPoint& end_point); // must call freeaddrinfo afterward
+        static addrinfo* resolve_address(const SocketData& socket_data, const EndPoint& end_point); // must call freeaddrinfo afterward
 
         int m_socket;
         SocketData m_socket_data;

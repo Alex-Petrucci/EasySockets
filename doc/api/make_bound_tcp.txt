@@ -1,0 +1,5 @@
+@brief Makes a TCP socket bound to the given port.
+@param port The port which the socket will be bound to.
+@param ip_version Optional paramater for the IP version that the
+socket will use. Defaults to `IpVersion::DUAL_STACK`.
+@return The bound socket.
