@@ -15,10 +15,7 @@ int main()
         es::Context context{};
 
         std::cout << "Creating server socket\n";
-        es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::TCP};
-
-        std::cout << "Binding server socket\n";
-        server.bind_to({"::", 8080});
+        es::Socket server = es::Socket::make_bound_tcp(8080);
 
         std::cout << "Start listening on server\n";
         server.listen_for_connections(2);

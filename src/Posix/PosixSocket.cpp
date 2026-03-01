@@ -283,4 +283,32 @@ namespace es
 
         return PosixSocket{};
     }
+
+    PosixSocket PosixSocket::make_bound_tcp(Port port, IpVersion ip_version)
+    {
+        PosixSocket socket{ip_version, es::Protocol::TCP};
+        if (ip_version == IpVersion::IPV4)
+        {
+            socket.bind_to({"0.0.0.0", port});
+        }
+        else
+        {
+            socket.bind_to({"::", port});
+        }
+        return socket;
+    }
+
+    PosixSocket PosixSocket::make_bound_udp(Port port, IpVersion ip_version)
+    {
+        PosixSocket socket{ip_version, es::Protocol::UDP};
+        if (ip_version == IpVersion::IPV4)
+        {
+            socket.bind_to({"0.0.0.0", port});
+        }
+        else
+        {
+            socket.bind_to({"::", port});
+        }
+        return socket;
+    }
 }

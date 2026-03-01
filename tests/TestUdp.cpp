@@ -12,10 +12,7 @@ int main()
         es::Context context;
 
         std::cout << "Creating server socket\n";
-        es::Socket server{es::IpVersion::DUAL_STACK, es::Protocol::UDP};
-
-        std::cout << "Binding server\n";
-        server.bind_to({"::", 8080});
+        es::Socket server = es::Socket::make_bound_udp(8080);
 
         es::EndPoint client_endpoint{};
         char buffer[1024]{};

@@ -137,6 +137,26 @@ namespace es
          */
         static PosixSocket make_connected_udp(const EndPoint& end_point);
 
+        ES_API_DOC(make_bound_tcp)
+        /**
+         * @brief Makes a TCP socket bound to the given port.
+         * @param port The port which the socket will be bound to.
+         * @param ip_version Optional paramater for the IP version that the
+         * socket will use. Defaults to `IpVersion::DUAL_STACK`.
+         * @return The bound socket.
+         */
+        static PosixSocket make_bound_tcp(Port port, IpVersion ip_version = IpVersion::DUAL_STACK);
+
+        ES_API_DOC(make_bound_udp)
+        /**
+         * @brief Makes a UDP socket bound to the given port.
+         * @param port The port which the socket will be bound to.
+         * @param ip_version Optional paramater for the IP version that the
+         * socket will use. Defaults to `IpVersion::DUAL_STACK`.
+         * @return The bound socket.
+         */
+        static PosixSocket make_bound_udp(Port port, IpVersion ip_version = IpVersion::DUAL_STACK);
+
     private:
         struct SocketData
         {
