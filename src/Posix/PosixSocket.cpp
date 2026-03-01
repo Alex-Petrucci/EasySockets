@@ -253,4 +253,34 @@ namespace es
 
         return PosixSocket{};
     }
+
+    PosixSocket PosixSocket::make_connected_udp(const EndPoint& end_point)
+    {
+        SocketData socket_data = {.af = AF_UNSPEC, .type = SOCK_DGRAM, .protocol = IPPROTO_UDP};
+        addrinfo* addr_info = resolve_address(socket_data, end_point);
+
+        for (addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
+        {
+            int sock = socket(node->ai_family, node->ai_socktype, node->ai_protocol);
+
+            if (connect(sock, node->ai_addr, node->ai_addrlen) == 0)
+            {
+                PosixSocket s{};
+                s.m_socket = sock;
+                s.m_socket_data.af = node->ai_family;
+                s.m_socket_data.type = node->ai_socktype;
+                s.m_socket_data.protocol = node->ai_socktype;
+                freeaddrinfo(addr_info);
+                return s;
+            }
+
+            close(sock);
+        }
+
+        freeaddrinfo(addr_info);
+
+        throw std::runtime_error("connect() failed for all resolved addresses");
+
+        return PosixSocket{};
+    }
 }

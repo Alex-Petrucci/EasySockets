@@ -264,4 +264,34 @@ namespace es
 
         return WindowsSocket{};
     }
+
+    WindowsSocket WindowsSocket::make_connected_udp(const EndPoint& end_point)
+    {
+        WinsockData winsock_data = {.af = AF_UNSPEC, .type = SOCK_DGRAM, .protocol = IPPROTO_UDP};
+        addrinfo* addr_info = resolve_address(winsock_data, end_point, 0);
+
+        for (const addrinfo* node = addr_info; node != nullptr; node = node->ai_next)
+        {
+            SOCKET sock = socket(node->ai_family, node->ai_socktype, node->ai_protocol);
+
+            if (connect(sock, node->ai_addr, node->ai_addrlen) != SOCKET_ERROR)
+            {
+                WindowsSocket s{};
+                s.m_socket = sock;
+                s.m_winsock_data.af = node->ai_family;
+                s.m_winsock_data.type = node->ai_socktype;
+                s.m_winsock_data.protocol = node->ai_protocol;
+                freeaddrinfo(addr_info);
+                return s;
+            }
+
+            closesocket(sock);
+        }
+
+        freeaddrinfo(addr_info);
+
+        throw std::runtime_error("connect() failed for all resolved addresses");
+
+        return WindowsSocket{};
+    }
 }

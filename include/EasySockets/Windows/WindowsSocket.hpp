@@ -130,6 +130,14 @@ namespace es
          */
         static WindowsSocket make_connected_tcp(const EndPoint& end_point);
 
+        ES_API_DOC(make_connected_udp)
+        /**
+         * @brief Makes a UDP socket connected to the given endpoint.
+         * @param end_point The endpoint that the socket is attempting to connect to.
+         * @return The connected socket.
+         */
+        static WindowsSocket make_connected_udp(const EndPoint& end_point);
+
     private:
         // data that winsock needs for the socket
         struct WinsockData
