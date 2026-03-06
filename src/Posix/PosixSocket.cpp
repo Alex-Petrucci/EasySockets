@@ -62,8 +62,7 @@ namespace es
 
     PosixSocket::~PosixSocket()
     {
-        shutdown(m_socket, SHUT_WR);
-        close(m_socket);
+        close();
     }
 
     PosixSocket::PosixSocket(PosixSocket&& other) noexcept
@@ -207,6 +206,11 @@ namespace es
         return buffer_size;
     }
 
+    void PosixSocket::close()
+    {
+        shutdown(m_socket, SHUT_WR);
+        ::close(m_socket);
+    }
 
     addrinfo* PosixSocket::resolve_address(const SocketData& socket_data, const EndPoint& end_point)
     {
@@ -244,7 +248,7 @@ namespace es
                 return s;
             }
 
-            close(sock);
+            ::close(sock);
         }
 
         freeaddrinfo(addr_info);
@@ -274,7 +278,7 @@ namespace es
                 return s;
             }
 
-            close(sock);
+            ::close(sock);
         }
 
         freeaddrinfo(addr_info);

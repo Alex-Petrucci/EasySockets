@@ -101,6 +101,11 @@ int main()
             throw std::runtime_error("Server did not receive correct data.\nData:" + std::string{buffer});
         }
 #pragma endregion
+
+#pragma region CLEANUP
+        std::cout << "Manually closing socket\n";
+        server.close();
+#pragma endregion
     }
     catch (const std::exception& e)
     {
