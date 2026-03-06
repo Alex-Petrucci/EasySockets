@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.2.1
+* Fixed bug where `es::Socket` default constructor was private.
+
 ## v2.2.0
 * Added `es::Socket::close`.
 
