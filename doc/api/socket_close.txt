@@ -1,0 +1,4 @@
+@brief Closes the socket.
+@details Is automatically called on destruction.
+Will make blocking methods on socket that are currently
+beign executed throw.

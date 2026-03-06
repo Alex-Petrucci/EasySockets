@@ -84,8 +84,13 @@ int main()
         if (std::string{buffer, static_cast<size_t>(received)} != data)
         {
             throw std::runtime_error("Server did not receive correct data.\nData:" + std::string{buffer} +
-                                     "\nSender: {" + client_endpoint.address + ":" + std::to_string(client_endpoint.port) + "}");
+                "\nSender: {" + client_endpoint.address + ":" + std::to_string(client_endpoint.port) + "}");
         }
+#pragma endregion
+
+#pragma region CLEANUP
+        std::cout << "Manually closing socket\n";
+        server.close();
 #pragma endregion
     }
     catch (const std::exception& e)

@@ -16,6 +16,7 @@ namespace es
         { t.receive_data_from(buffer, len, end_point) }     -> std::same_as<int64_t>;
         { t.send_data(buffer, len) }                        -> std::same_as<int64_t>;
         { t.send_data_to(buffer, len, end_point) }          -> std::same_as<int64_t>;
+        { t.close() };
         { T::make_connected_tcp(end_point) }                -> std::same_as<T>;
         { T::make_connected_udp(end_point) }                -> std::same_as<T>;
         { T::make_bound_tcp(end_point.port, ip_version) }   -> std::same_as<T>;

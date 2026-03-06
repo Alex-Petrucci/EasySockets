@@ -121,6 +121,15 @@ namespace es
          */
         int64_t send_data_to(const char* buffer, int buffer_size, const EndPoint& end_point);
 
+        ES_API_DOC(socket_close)
+        /**
+         * @brief Closes the socket.
+         * @details Is automatically called on destruction.
+         * Will make blocking methods on socket that are currently
+         * beign executed throw.
+         */
+        void close();
+
         ES_API_DOC(make_connected_tcp)
         /**
          * @brief Makes a TCP socket connected to the given endpoint.

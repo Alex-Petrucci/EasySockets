@@ -16,11 +16,7 @@ namespace es
 
     WindowsSocket::~WindowsSocket()
     {
-        if (m_socket != INVALID_SOCKET)
-        {
-            shutdown(m_socket, SD_SEND);
-            closesocket(m_socket);
-        }
+        close();
     }
 
     WindowsSocket::WindowsSocket(IpVersion ip_version, Protocol protocol)
@@ -216,6 +212,15 @@ namespace es
             throw std::runtime_error("sendto() failed: " + std::to_string(WSAGetLastError()));
 
         return bytes;
+    }
+
+    void WindowsSocket::close()
+    {
+        if (m_socket != INVALID_SOCKET)
+        {
+            shutdown(m_socket, SD_SEND);
+            closesocket(m_socket);
+        }
     }
 
     addrinfo* WindowsSocket::resolve_address(const WinsockData& winsock_data, const EndPoint& end_point, int flags)
