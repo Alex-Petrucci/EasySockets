@@ -24,6 +24,13 @@ namespace es
     class WindowsSocket
     {
     public:
+        ES_API_DOC(socket_default_constructor)
+        /**
+         * @brief Default constructs a socket.
+         * @details This socket will not be usable and will have to be assigned to something else.
+         */
+        WindowsSocket();
+
         ES_API_DOC(socket_constructor)
         /**
          * @brief Constructor for Socket.
@@ -175,9 +182,6 @@ namespace es
             int type;
             int protocol;
         };
-
-        // only for internal use when creating a socket for accepting
-        WindowsSocket();
 
         // must free with freeaddrinfo
         static addrinfo* resolve_address(const WinsockData& winsock_data, const EndPoint& end_point, int flags);

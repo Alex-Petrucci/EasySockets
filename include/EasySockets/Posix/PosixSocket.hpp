@@ -23,6 +23,13 @@ namespace es
     class PosixSocket
     {
     public:
+        ES_API_DOC(socket_default_constructor)
+        /**
+         * @brief Default constructs a socket.
+         * @details This socket will not be usable and will have to be assigned to something else.
+         */
+        PosixSocket();
+
         ES_API_DOC(socket_constructor)
         /**
          * @brief Constructor for Socket.
@@ -173,8 +180,6 @@ namespace es
             int type;
             int protocol;
         };
-
-        PosixSocket();
 
         static addrinfo* resolve_address(const SocketData& socket_data, const EndPoint& end_point); // must call freeaddrinfo afterward
 
