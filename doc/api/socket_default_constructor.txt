@@ -1,0 +1,2 @@
+@brief Default constructs a socket.
+@details This socket will not be usable and will have to be assigned to something else.
