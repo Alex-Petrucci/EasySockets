@@ -1,5 +1,5 @@
 # EasySockets
-<small>Version 2.2.0</small>
+<small>Version 2.2.1</small>
 
 Simple to use, cross-platform socket library for C++.
 
