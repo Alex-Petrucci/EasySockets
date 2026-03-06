@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.2.0
+* Added `es::Socket::close`.
+
 ## v2.1.0
 * Added `es::Socket::make_connected_tcp`.
 * Added `es::Socket::make_connected_udp`.
