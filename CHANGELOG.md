@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.2
+* Added license for Doxygen Awesome.
+    * ***IMPORTANT:*** This was mistakenly forgotten in previous versions of 
+    EasySockets so if you wish to use an older version please add the new 
+    license file to your project.
+
 ## v2.2.1
 * Fixed bug where `es::Socket` default constructor was private.
 
